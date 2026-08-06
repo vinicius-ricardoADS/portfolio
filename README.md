@@ -1,4 +1,4 @@
-# Portfólio Vinícius Ricardo Rosa Noli
+# Portfólio de Vinícius Ricardo Rosa Noli
 
 Portfólio pessoal desenvolvido para apresentar projetos e habilidades como Desenvolvedor Full Stack.
 
