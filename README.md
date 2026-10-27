@@ -9,6 +9,7 @@ Este é um site de portfólio moderno e responsivo que destaca:
 - Habilidades técnicas em desenvolvimento full stack
 - Projetos principais desenvolvidos
 - Formas de contato
+- Experiências profissionais
 
 ## Tecnologias Utilizadas
 
