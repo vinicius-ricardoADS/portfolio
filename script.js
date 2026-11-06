@@ -331,3 +331,212 @@ if (aboutSection) {
 
     observer.observe(aboutSection);
 }
+
+// ========================================
+// Game Case Study (Cantos GLN)
+// ========================================
+const GAME_URL = 'https://cantos-r9ki.onrender.com';
+const GAME_COLORS = { red: '#d9583f', redNew: '#f08a73', teal: '#1f9e8f', amber: '#e2a32c', violet: '#7a5cc4' };
+const GAME_PIECE_COLORS = [GAME_COLORS.red, GAME_COLORS.teal, GAME_COLORS.amber, GAME_COLORS.violet];
+
+const GAME_PIECES = [
+    [[0, 0]],
+    [[0, 0], [1, 0]],
+    [[0, 0], [1, 0], [2, 0]],
+    [[0, 0], [0, 1], [1, 1]],
+    [[0, 0], [1, 0], [2, 0], [3, 0]],
+    [[0, 0], [0, 1], [0, 2], [1, 2]],
+    [[0, 0], [1, 0], [2, 0], [1, 1]],
+    [[1, 0], [2, 0], [0, 1], [1, 1]],
+    [[0, 0], [1, 0], [0, 1], [1, 1]],
+    [[1, 0], [2, 0], [0, 1], [1, 1], [1, 2]],
+    [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]],
+    [[0, 0], [0, 1], [0, 2], [0, 3], [1, 3]],
+    [[1, 0], [1, 1], [0, 2], [1, 2], [0, 3]],
+    [[0, 0], [1, 0], [0, 1], [1, 1], [0, 2]],
+    [[0, 0], [1, 0], [2, 0], [1, 1], [1, 2]],
+    [[0, 0], [2, 0], [0, 1], [1, 1], [2, 1]],
+    [[0, 0], [0, 1], [0, 2], [1, 2], [2, 2]],
+    [[0, 0], [0, 1], [1, 1], [1, 2], [2, 2]],
+    [[1, 0], [0, 1], [1, 1], [2, 1], [1, 2]],
+    [[1, 0], [0, 1], [1, 1], [1, 2], [1, 3]],
+    [[0, 0], [1, 0], [1, 1], [1, 2], [2, 2]],
+];
+
+const GAME_MINI_BOARDS = {
+    start: {
+        size: 6,
+        alt: 'Peça vermelha cobrindo o canto inferior esquerdo do tabuleiro.',
+        pieces: [{ color: 'red', cells: [[0, 5], [0, 4], [0, 3], [1, 5], [2, 5]] }],
+    },
+    cornerOk: {
+        size: 6,
+        alt: 'Peça nova encostando na peça vermelha apenas pelo canto: jogada válida.',
+        pieces: [
+            { color: 'red', cells: [[0, 5], [0, 4], [1, 5]] },
+            { color: 'redNew', cells: [[1, 3], [2, 3], [3, 3], [2, 4]] },
+        ],
+    },
+    edgeBad: {
+        size: 6,
+        alt: 'Peça nova encostando na peça vermelha pelo lado: jogada inválida.',
+        pieces: [
+            { color: 'red', cells: [[0, 5], [0, 4], [1, 5]] },
+            { color: 'redNew', cells: [[1, 4], [2, 4], [3, 4], [2, 3]] },
+        ],
+        conflict: [[1, 4]],
+    },
+    rival: {
+        size: 6,
+        alt: 'Peça vermelha e peça verde encostadas lado a lado: permitido.',
+        pieces: [
+            { color: 'red', cells: [[1, 4], [2, 4], [3, 4], [2, 3]] },
+            { color: 'teal', cells: [[3, 3], [3, 2], [4, 3], [4, 4]] },
+        ],
+    },
+};
+
+function createSvg(tag, attributes = {}) {
+    const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    Object.entries(attributes).forEach(([name, value]) => node.setAttribute(name, value));
+    return node;
+}
+
+function renderMiniBoard(container) {
+    const board = GAME_MINI_BOARDS[container.dataset.miniBoard];
+    const svg = createSvg('svg', { viewBox: `0 0 ${board.size} ${board.size}`, class: 'mini-board', role: 'img', 'aria-label': board.alt });
+
+    for (let y = 0; y < board.size; y++) {
+        for (let x = 0; x < board.size; x++) {
+            svg.append(createSvg('rect', { x, y, width: 1, height: 1, class: 'mini-cell' }));
+        }
+    }
+    board.pieces.forEach(({ color, cells }) => {
+        cells.forEach(([x, y]) => {
+            svg.append(createSvg('rect', { x: x + 0.05, y: y + 0.05, width: 0.9, height: 0.9, rx: 0.12, fill: GAME_COLORS[color] }));
+        });
+    });
+    (board.conflict || []).forEach(([x, y]) => {
+        svg.append(createSvg('rect', { x: x + 0.05, y: y + 0.05, width: 0.9, height: 0.9, rx: 0.12, fill: 'none', stroke: '#dc2626', 'stroke-width': 0.12 }));
+    });
+    container.append(svg);
+}
+
+function renderGamePieces(container) {
+    GAME_PIECES.forEach((cells, i) => {
+        const width = Math.max(...cells.map(([x]) => x)) + 1;
+        const height = Math.max(...cells.map(([, y]) => y)) + 1;
+        const side = Math.max(width, height);
+        const offsetX = (side - width) / 2;
+        const offsetY = (side - height) / 2;
+        const color = GAME_PIECE_COLORS[i % GAME_PIECE_COLORS.length];
+        const svg = createSvg('svg', { viewBox: `0 0 ${side} ${side}`, role: 'img', 'aria-label': `Peça de ${cells.length} ${cells.length === 1 ? 'bloco' : 'blocos'}` });
+
+        cells.forEach(([x, y]) => {
+            svg.append(createSvg('rect', { x: x + offsetX + 0.05, y: y + offsetY + 0.05, width: 0.9, height: 0.9, rx: 0.14, fill: color }));
+        });
+
+        const piece = document.createElement('div');
+        piece.className = 'game-piece';
+        piece.append(svg);
+        container.append(piece);
+    });
+}
+
+function setupRuleBoard() {
+    const SIZE = 7;
+    const owners = new Map([
+        ['2,3', 'red'], ['3,3', 'red'], ['3,4', 'red'], ['2,4', 'red'],
+        ['5,1', 'teal'], ['5,2', 'teal'], ['4,2', 'teal'],
+    ]);
+    const boardEl = document.getElementById('rule-board');
+    const result = document.getElementById('rule-result');
+    const hint = document.getElementById('rule-hint');
+    if (!boardEl || !result || !hint) return;
+
+    const isRed = (x, y) => owners.get(`${x},${y}`) === 'red';
+    const touchesSide = (x, y) => isRed(x - 1, y) || isRed(x + 1, y) || isRed(x, y - 1) || isRed(x, y + 1);
+    const touchesCorner = (x, y) => isRed(x - 1, y - 1) || isRed(x + 1, y - 1) || isRed(x - 1, y + 1) || isRed(x + 1, y + 1);
+
+    function judge(x, y) {
+        if (owners.has(`${x},${y}`)) return { valid: false, text: 'Não vale: essa casa já está ocupada.' };
+        if (touchesSide(x, y)) return { valid: false, text: 'Não vale: o bloco encosta no vermelho pelo lado.' };
+        if (touchesCorner(x, y)) return { valid: true, text: 'Vale! O bloco toca no vermelho só pelo canto.' };
+        return { valid: false, text: 'Não vale: o bloco precisa tocar em uma peça vermelha pelo canto.' };
+    }
+
+    const cells = [];
+    for (let y = 0; y < SIZE; y++) {
+        for (let x = 0; x < SIZE; x++) {
+            const cell = document.createElement('button');
+            const owner = owners.get(`${x},${y}`);
+            const status = owner === 'red' ? ', peça vermelha' : owner === 'teal' ? ', peça verde' : '';
+            cell.type = 'button';
+            cell.className = 'rule-cell';
+            cell.setAttribute('aria-label', `Coluna ${x + 1}, linha ${y + 1}${status}`);
+            if (owner) cell.classList.add(`is-${owner}`);
+            if (judge(x, y).valid) cell.classList.add('is-anchor');
+            cell.addEventListener('click', () => {
+                const verdict = judge(x, y);
+                cells.forEach(other => other.classList.remove('is-chosen-valid', 'is-chosen-invalid'));
+                cell.classList.add(verdict.valid ? 'is-chosen-valid' : 'is-chosen-invalid');
+                result.textContent = verdict.text;
+                result.classList.toggle('is-valid', verdict.valid);
+                result.classList.toggle('is-invalid', !verdict.valid);
+            });
+            cells.push(cell);
+            boardEl.append(cell);
+        }
+    }
+
+    hint.addEventListener('click', () => {
+        const showing = boardEl.classList.toggle('show-hints');
+        hint.setAttribute('aria-pressed', String(showing));
+        hint.textContent = showing ? 'Ocultar casas válidas' : 'Mostrar casas válidas';
+    });
+}
+
+function setupGameLightbox() {
+    const dialog = document.getElementById('game-lightbox');
+    const image = document.getElementById('game-lightbox-image');
+    const caption = document.getElementById('game-lightbox-caption');
+    const close = document.getElementById('game-lightbox-close');
+    if (!dialog || !image || !caption || !close) return;
+
+    document.querySelectorAll('.game-shot').forEach(shot => {
+        shot.addEventListener('click', () => {
+            image.src = shot.dataset.full;
+            image.alt = shot.querySelector('img').alt;
+            caption.textContent = shot.dataset.caption;
+            dialog.showModal();
+        });
+    });
+
+    close.addEventListener('click', () => dialog.close());
+    // O clique fora do conteúdo atinge o próprio dialog
+    dialog.addEventListener('click', event => {
+        if (event.target === dialog) dialog.close();
+    });
+}
+
+// O plano gratuito coloca o servidor em repouso: acorda quando a seção aparece, para o jogo abrir mais rápido
+function wakeGameServer() {
+    const section = document.getElementById('game');
+    if (!section) return;
+
+    const wakeObserver = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+            wakeObserver.disconnect();
+            fetch(`${GAME_URL}/health`, { mode: 'no-cors' }).catch(() => {});
+        }
+    }, { rootMargin: '200px' });
+
+    wakeObserver.observe(section);
+}
+
+document.querySelectorAll('[data-mini-board]').forEach(renderMiniBoard);
+const gamePiecesContainer = document.getElementById('game-pieces');
+if (gamePiecesContainer) renderGamePieces(gamePiecesContainer);
+setupRuleBoard();
+setupGameLightbox();
+wakeGameServer();

@@ -24,6 +24,7 @@
                 <li><a href="#about" class="nav-link">Sobre</a></li>
                 <li><a href="#skills" class="nav-link">Habilidades</a></li>
                 <li><a href="#projects" class="nav-link">Projetos</a></li>
+                <li><a href="#game" class="nav-link">Jogo</a></li>
                 <li><a href="#contact" class="nav-link">Contato</a></li>
             </ul>
             <div class="nav-toggle" id="nav-toggle">
@@ -292,6 +293,229 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- Game Case Study Section -->
+    <section class="game" id="game">
+        <div class="container">
+            <div class="game-hero">
+                <div class="game-intro">
+                    <span class="game-eyebrow">Projeto pessoal · Jogo multiplayer online</span>
+                    <h2 class="game-title">Cantos GLN</h2>
+                    <p class="game-lead">
+                        Jogo de tabuleiro 3D para até 4 pessoas, direto no navegador e sem instalar nada.
+                        Cada jogador parte de um canto e encaixa suas peças tocando apenas nas pontas,
+                        disputando espaço até ninguém mais conseguir jogar.
+                    </p>
+                    <div class="game-actions">
+                        <a href="https://cantos-r9ki.onrender.com" target="_blank" rel="noopener" class="btn btn-primary">Jogar agora</a>
+                        <a href="#game-rules" class="btn btn-secondary">Como funciona</a>
+                    </div>
+                    <p class="game-note">
+                        Hospedado em plano gratuito: se o servidor estiver em repouso, a primeira abertura pode levar cerca de 1 minuto.
+                        Dá para jogar sozinho contra bots.
+                    </p>
+                    <dl class="game-stats">
+                        <div><dt>Jogadores</dt><dd>4</dd></div>
+                        <div><dt>Tabuleiro</dt><dd>20×20</dd></div>
+                        <div><dt>Peças por jogador</dt><dd>21</dd></div>
+                        <div><dt>Testes automatizados</dt><dd>23</dd></div>
+                    </dl>
+                </div>
+                <figure class="game-browser">
+                    <div class="game-browser-bar" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                        <code>cantos-r9ki.onrender.com</code>
+                    </div>
+                    <img src="assets/cantos-gln/jogada.jpg" width="2732" height="1536" alt="Partida em andamento: tabuleiro de madeira com peças de quatro cores, bandeja de peças à esquerda e placar à direita.">
+                </figure>
+            </div>
+
+            <!-- Gallery -->
+            <div class="game-block">
+                <h3 class="game-heading">O jogo por dentro</h3>
+                <p class="game-subheading">Capturas reais de uma partida. Clique para ampliar.</p>
+                <div class="game-gallery">
+                    <button type="button" class="game-shot" data-full="assets/cantos-gln/lobby.jpg" data-caption="Sala de espera com código e link de convite. As vagas livres viram bots quando a partida começa.">
+                        <img src="assets/cantos-gln/lobby.jpg" width="2732" height="1536" loading="lazy" alt="Sala de espera com o código da sala, o link de convite e os quatro lugares.">
+                        <span>Sala com convite por link</span>
+                    </button>
+                    <button type="button" class="game-shot" data-full="assets/cantos-gln/angulo.jpg" data-caption="Câmera livre: arraste para girar o tabuleiro e use a roda do mouse ou a pinça para aproximar.">
+                        <img src="assets/cantos-gln/angulo.jpg" width="2732" height="1536" loading="lazy" alt="Tabuleiro visto em ângulo, com a câmera girada, no meio da partida.">
+                        <span>Câmera livre em 3D</span>
+                    </button>
+                    <button type="button" class="game-shot game-shot-phone" data-full="assets/cantos-gln/celular.jpg" data-caption="No celular, o placar fica compacto, as peças ficam em uma faixa e a jogada é confirmada no botão Colocar.">
+                        <img src="assets/cantos-gln/celular.jpg" width="780" height="1688" loading="lazy" alt="Jogo na tela de um celular, com placar no topo, tabuleiro no centro e peças em uma faixa inferior.">
+                        <span>Layout para celular</span>
+                    </button>
+                    <button type="button" class="game-shot" data-full="assets/cantos-gln/inicio.jpg" data-caption="Tela inicial: basta digitar um nome para criar uma sala ou entrar com um código de 4 letras.">
+                        <img src="assets/cantos-gln/inicio.jpg" width="2732" height="1536" loading="lazy" alt="Tela inicial do Cantos GLN, com o campo de nome e os botões para criar ou entrar em uma sala.">
+                        <span>Sem cadastro</span>
+                    </button>
+                    <button type="button" class="game-shot" data-full="assets/cantos-gln/resultado.jpg" data-caption="Fim de partida: ranking com a pontuação de cada jogador e a opção de jogar de novo.">
+                        <img src="assets/cantos-gln/resultado.jpg" width="2732" height="1536" loading="lazy" alt="Janela de resultado com o ranking dos quatro jogadores.">
+                        <span>Ranking final</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Rules -->
+            <div class="game-block" id="game-rules">
+                <h3 class="game-heading">As regras em três exemplos</h3>
+                <p class="game-subheading">Simples de aprender e difícil de dominar: toda jogada abre caminhos para você e fecha para os outros.</p>
+                <div class="game-rules">
+                    <article class="game-rule">
+                        <div class="game-rule-boards"><div data-mini-board="start"></div></div>
+                        <h4>1. Comece no seu canto</h4>
+                        <p>A primeira peça precisa cobrir o canto marcado com a sua cor. Cada jogador tem o seu.</p>
+                    </article>
+                    <article class="game-rule">
+                        <div class="game-rule-boards">
+                            <figure><div data-mini-board="cornerOk"></div><figcaption class="is-valid">Pelo canto: vale</figcaption></figure>
+                            <figure><div data-mini-board="edgeBad"></div><figcaption class="is-invalid">Pelo lado: não vale</figcaption></figure>
+                        </div>
+                        <h4>2. Sua cor só se toca nas pontas</h4>
+                        <p>Cada peça nova precisa encostar em outra sua pelo canto, nunca pelo lado.</p>
+                    </article>
+                    <article class="game-rule">
+                        <div class="game-rule-boards"><div data-mini-board="rival"></div></div>
+                        <h4>3. Rivais podem encostar</h4>
+                        <p>Com outras cores não há restrição, e bloquear o caminho faz parte da estratégia.</p>
+                    </article>
+                </div>
+
+                <div class="game-try">
+                    <div class="game-try-text">
+                        <h4>Teste a regra</h4>
+                        <p>É a vez do vermelho. Escolha uma casa para colocar um bloco e veja se a jogada vale.</p>
+                        <p class="game-try-result" id="rule-result" role="status">Escolha uma casa no tabuleiro.</p>
+                        <button type="button" class="btn btn-secondary game-try-hint" id="rule-hint" aria-pressed="false">Mostrar casas válidas</button>
+                    </div>
+                    <div class="rule-board" id="rule-board" role="group" aria-label="Tabuleiro de exemplo com 7 por 7 casas"></div>
+                </div>
+
+                <div class="game-score">
+                    <strong>Pontuação:</strong> 1 ponto por bloco colocado, mais 8 de bônus para quem usar todas as peças.
+                    Sem jogada possível, o jogador sai da rodada. A partida termina quando ninguém mais consegue jogar.
+                </div>
+            </div>
+
+            <!-- Pieces -->
+            <div class="game-block">
+                <h3 class="game-heading">As 21 peças</h3>
+                <p class="game-subheading">Todas as formas possíveis de 1 a 5 blocos. Cada peça pode ser girada e espelhada, e só pode ser usada uma vez.</p>
+                <div class="game-pieces" id="game-pieces"></div>
+            </div>
+
+            <!-- Architecture -->
+            <div class="game-block">
+                <h3 class="game-heading">Como foi construído</h3>
+                <p class="game-subheading">O servidor é a fonte da verdade, e o navegador apenas mostra o estado e envia as intenções do jogador.</p>
+                <div class="game-arch" role="img" aria-label="O navegador e o servidor trocam mensagens JSON por WebSocket, e os dois usam o mesmo módulo de regras.">
+                    <div class="game-arch-node">
+                        <span>Navegador</span>
+                        <strong>Three.js · TypeScript · Vite</strong>
+                        <small>Cena 3D, interface e prévia da jogada</small>
+                    </div>
+                    <div class="game-arch-link"><span>WebSocket</span><small>mensagens JSON</small></div>
+                    <div class="game-arch-node">
+                        <span>Servidor</span>
+                        <strong>Node.js · ws · Docker</strong>
+                        <small>Salas, turnos, tempo, reconexão e bots</small>
+                    </div>
+                    <div class="game-arch-shared">
+                        <strong>shared/</strong> mesmo código de regras e protocolo nos dois lados
+                    </div>
+                </div>
+
+                <div class="game-flow">
+                    <div class="game-flow-steps">
+                        <h4>O caminho de uma jogada</h4>
+                        <ol>
+                            <li>O clique é convertido em uma casa do tabuleiro por raycasting.</li>
+                            <li>O cliente confere a jogada com as regras compartilhadas, para responder na hora, e a envia.</li>
+                            <li>O servidor valida o formato da mensagem e confere as regras de novo.</li>
+                            <li>A jogada é aplicada e o novo estado vai para todos os jogadores da sala.</li>
+                            <li>Cada navegador atualiza o placar e anima os blocos novos.</li>
+                        </ol>
+                    </div>
+                    <figure class="game-code">
+                        <figcaption>shared/game.ts: a regra usada pelo cliente e pelo servidor</figcaption>
+                        <pre><code>function cellsAreLegal(game, seat, cells) {
+  let connected = false;
+  for (const [x, y] of cells) {
+    if (!inBounds(x, y) || game.board[index(x, y)] !== -1) return false;
+    if (isReservedForOther(game, seat, x, y)) return false;
+    if (touchesEdge(game, seat, x, y)) return false;
+    if (game.started[seat]) {
+      connected ||= touchesCorner(game, seat, x, y);
+    } else {
+      connected ||= x === SEEDS[seat][0] &amp;&amp; y === SEEDS[seat][1];
+    }
+  }
+  return connected;
+}</code></pre>
+                    </figure>
+                </div>
+            </div>
+
+            <!-- Technical decisions -->
+            <div class="game-block">
+                <h3 class="game-heading">Decisões técnicas</h3>
+                <p class="game-subheading">O que torna o jogo confiável e leve, inclusive em aparelhos mais simples.</p>
+                <div class="game-decisions">
+                    <article class="game-decision">
+                        <h4>Servidor autoritativo</h4>
+                        <p>Toda jogada é validada no servidor. Alterar o código no navegador não permite trapacear.</p>
+                    </article>
+                    <article class="game-decision">
+                        <h4>Regras em um só lugar</h4>
+                        <p>Cliente e servidor importam o mesmo módulo, o que dá resposta imediata sem duplicar lógica.</p>
+                    </article>
+                    <article class="game-decision">
+                        <h4>3D sob demanda</h4>
+                        <p>A cena só é desenhada quando algo muda. Parada, não consome GPU, e as sombras só são recalculadas depois de uma jogada.</p>
+                    </article>
+                    <article class="game-decision">
+                        <h4>Qualidade adaptativa</h4>
+                        <p>Se os quadros ficam lentos durante uma animação, a resolução cai aos poucos para manter a fluidez.</p>
+                    </article>
+                    <article class="game-decision">
+                        <h4>Queda de conexão</h4>
+                        <p>O cliente reconecta sozinho e recupera o lugar com um token. Se a pessoa não voltar a tempo, um bot joga a vez dela.</p>
+                    </article>
+                    <article class="game-decision">
+                        <h4>Bots por heurística</h4>
+                        <p>O bot pontua cada jogada legal, preferindo peças grandes, novos cantos abertos e casas que atrapalhem os rivais.</p>
+                    </article>
+                    <article class="game-decision">
+                        <h4>Entrada protegida</h4>
+                        <p>As mensagens são validadas, limitadas a 1 KB e a 80 a cada 10 segundos por conexão.</p>
+                    </article>
+                    <article class="game-decision">
+                        <h4>Trade-off consciente</h4>
+                        <p>As salas ficam em memória, em uma única instância. É simples e barato, mas um reinício encerra as partidas em andamento.</p>
+                    </article>
+                </div>
+                <div class="project-tags game-tags">
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">Three.js</span>
+                    <span class="tag">WebGL</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">WebSocket</span>
+                    <span class="tag">Vite</span>
+                    <span class="tag">Vitest</span>
+                    <span class="tag">Docker</span>
+                    <span class="tag">Render</span>
+                </div>
+            </div>
+        </div>
+
+        <dialog class="game-lightbox" id="game-lightbox" aria-label="Imagem ampliada">
+            <button type="button" class="game-lightbox-close" id="game-lightbox-close" aria-label="Fechar">×</button>
+            <img id="game-lightbox-image" alt="">
+            <p id="game-lightbox-caption"></p>
+        </dialog>
     </section>
 
     <!-- Contact Section -->

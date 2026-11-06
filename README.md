@@ -44,7 +44,8 @@ Este é um site de portfólio moderno e responsivo que destaca:
    - Company Appraiser Web
    - Company Appraiser Server
    - Financial Control
-5. **Contato** - Informações de contato e links
+5. **Jogo** - Estudo de caso do Cantos GLN, com capturas, regras ilustradas, exemplo interativo e arquitetura
+6. **Contato** - Informações de contato e links
 
 ## Como Usar
 
